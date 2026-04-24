@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DFR Request">
+    <title>Waitemata DFR — Examination Request</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+// Minimal QR Code Generator - fully self-contained
+// Based on https://github.com/nicornk/qrcodejs (MIT License)
+var QRCodeGen=(function(){function t(t,e){this.typeNumber=t;this.errorCorrectLevel=e;this.modules=null;this.moduleCount=0;this.dataCache=null;this.dataList=[]}var e={L:1,M:0,Q:3,H:2};var r={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8};var i={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7};var n=function(){var t=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];var e=function(e){for(var r=0;r<t.length;r++)if(t[r].length>0&&t[r][0]===e)return t[r];return null};return{getPatternPosition:function(t){return e(t-1)},getMaxLength:function(t,e,i){var n=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,199],[520,412,292,223],[586,450,322,253],[644,504,364,283],[718,560,394,313],[792,624,442,341],[858,666,482,385],[929,711,509,406],[1003,779,565,442],[1091,857,611,464],[1171,911,661,514],[1273,997,715,538],[1367,1059,751,596],[1465,1125,805,628],[1528,1190,868,661],[1628,1264,908,701],[1732,1370,982,745],[1840,1452,1030,793],[1952,1538,1112,845],[2068,1628,1168,901],[2188,1722,1228,961],[2303,1809,1283,986],[2431,1911,1351,1054],[2563,1989,1423,1096],[2699,2099,1499,1142],[2809,2213,1579,1222],[2953,2331,1663,1276]];if(i===r.MODE_8BIT_BYTE){return n[t-1][[e===1?0:e===0?1:e===3?2:3]]}return 0}}}();t.prototype={addData:function(t){var e=new o(t);this.dataList.push(e);this.dataCache=null},isDark:function(t,e){if(t<0||this.moduleCount<=t||e<0||this.moduleCount<=e)throw new Error(t+","+e);return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(false,this.getBestMaskPattern())},makeImpl:function(e,r){this.moduleCount=this.typeNumber*4+17;this.modules=new Array(this.moduleCount);for(var i=0;i<this.moduleCount;i++){this.modules[i]=new Array(this.moduleCount);for(var n=0;n<this.moduleCount;n++)this.modules[i][n]=null}this.setupPositionProbePattern(0,0);this.setupPositionProbePattern(this.moduleCount-7,0);this.setupPositionProbePattern(0,this.moduleCount-7);this.setupPositionAdjustPattern();this.setupTimingPattern();this.setupTypeInfo(e,r);if(this.typeNumber>=7)this.setupTypeNumber(e);if(this.dataCache==null)this.dataCache=t.createData(this.typeNumber,this.errorCorrectLevel,this.dataList);this.mapData(this.dataCache,r)},setupPositionProbePattern:function(t,e){for(var r=-1;r<=7;r++){if(t+r<=-1||this.moduleCount<=t+r)continue;for(var i=-1;i<=7;i++){if(e+i<=-1||this.moduleCount<=e+i)continue;if(0<=r&&r<=6&&(i==0||i==6)||0<=i&&i<=6&&(r==0||r==6)||2<=r&&r<=4&&2<=i&&i<=4)this.modules[t+r][e+i]=true;else this.modules[t+r][e+i]=false}}},getBestMaskPattern:function(){var t=0;var e=0;for(var r=0;r<8;r++){this.makeImpl(true,r);var n=s.getLostPoint(this);if(r==0||t>n){t=n;e=r}}return e},setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++){if(this.modules[t][6]!=null)continue;this.modules[t][6]=t%2==0}for(var t=8;t<this.moduleCount-8;t++){if(this.modules[6][t]!=null)continue;this.modules[6][t]=t%2==0}},setupPositionAdjustPattern:function(){var t=n.getPatternPosition(this.typeNumber);if(!t)return;for(var e=0;e<t.length;e++)for(var r=0;r<t.length;r++){var i=t[e];var s=t[r];if(this.modules[i][s]!=null)continue;for(var o=-2;o<=2;o++)for(var u=-2;u<=2;u++)if(o==-2||o==2||u==-2||u==2||o==0&&u==0)this.modules[i+o][s+u]=true;else this.modules[i+o][s+u]=false}},setupTypeNumber:function(t){var e=s.getBCHTypeNumber(this.typeNumber);for(var r=0;r<18;r++){var i=!t&&(e>>r&1)==1;this.modules[Math.floor(r/3)][r%3+this.moduleCount-8-3]=i}for(var r=0;r<18;r++){var i=!t&&(e>>r&1)==1;this.modules[r%3+this.moduleCount-8-3][Math.floor(r/3)]=i}},setupTypeInfo:function(t,e){var r=this.errorCorrectLevel<<3|e;var i=s.getBCHTypeInfo(r);for(var n=0;n<15;n++){var o=!t&&(i>>n&1)==1;if(n<6)this.modules[n][8]=o;else if(n<8)this.modules[n+1][8]=o;else this.modules[this.moduleCount-15+n][8]=o}for(var n=0;n<15;n++){var o=!t&&(i>>n&1)==1;if(n<8)this.modules[8][this.moduleCount-n-1]=o;else if(n<9)this.modules[8][15-n-1+1]=o;else this.modules[8][15-n-1]=o}this.modules[this.moduleCount-8][8]=!t},mapData:function(t,e){var r=-1;var i=this.moduleCount-1;var n=7;var o=0;for(var u=this.moduleCount-1;u>0;u-=2){if(u==6)u--;while(true){for(var a=0;a<2;a++){if(this.modules[i][u-a]==null){var f=false;if(o<t.length)f=(t[o]>>>n&1)==1;var l=s.getMask(e,i,u-a);if(l)f=!f;this.modules[i][u-a]=f;n--;if(n==-1){o++;n=7}}}i+=r;if(i<0||this.moduleCount<=i){i-=r;r=-r;break}}}}};t.PAD0=236;t.PAD1=17;t.createData=function(e,r,i){var n=a.getRSBlocks(e,r);var o=new u;for(var l=0;l<i.length;l++){var c=i[l];o.put(c.mode,4);o.put(c.getLength(),s.getLengthInBits(c.mode,e));c.write(o)}var h=0;for(var l=0;l<n.length;l++)h+=n[l].dataCount;if(o.getLengthInBits()>h*8)throw new Error("code length overflow. ("+o.getLengthInBits()+">"+h*8+")");if(o.getLengthInBits()+4<=h*8)o.put(0,4);while(o.getLengthInBits()%8!=0)o.putBit(false);while(true){if(o.getLengthInBits()>=h*8)break;o.put(t.PAD0,8);if(o.getLengthInBits()>=h*8)break;o.put(t.PAD1,8)}return t.createBytes(o,n)};t.createBytes=function(t,e){var r=0;var i=0;var n=0;var o=new Array(e.length);var u=new Array(e.length);for(var a=0;a<e.length;a++){var l=e[a].dataCount;var c=e[a].totalCount-l;i=Math.max(i,l);n=Math.max(n,c);o[a]=new Array(l);for(var h=0;h<o[a].length;h++)o[a][h]=255&t.buffer[h+r];r+=l;var d=s.getErrorCorrectPolynomial(c);var p=new f(o[a],d.getLength()-1);var g=p.mod(d);u[a]=new Array(d.getLength()-1);for(var h=0;h<u[a].length;h++){var m=h+g.getLength()-u[a].length;u[a][h]=m>=0?g.get(m):0}}var v=0;for(var h=0;h<e.length;h++)v+=e[h].totalCount;var y=new Array(v);var b=0;for(var h=0;h<i;h++)for(var a=0;a<e.length;a++)if(h<o[a].length){y[b]=o[a][h];b++}for(var h=0;h<n;h++)for(var a=0;a<e.length;a++){y[b]=u[a][h];b++}return y};var s={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(t){var e=t<<10;while(s.getBCHDigit(e)-s.getBCHDigit(s.G15)>=0)e^=s.G15<<s.getBCHDigit(e)-s.getBCHDigit(s.G15);return(t<<10|e)^s.G15_MASK},getBCHTypeNumber:function(t){var e=t<<12;while(s.getBCHDigit(e)-s.getBCHDigit(s.G18)>=0)e^=s.G18<<s.getBCHDigit(e)-s.getBCHDigit(s.G18);return t<<12|e},getBCHDigit:function(t){var e=0;while(t!=0){e++;t>>>=1}return e},getPatternPosition:function(t){return s.PATTERN_POSITION_TABLE[t-1]},getMask:function(t,e,r){switch(t){case i.PATTERN000:return(e+r)%2==0;case i.PATTERN001:return e%2==0;case i.PATTERN010:return r%3==0;case i.PATTERN011:return(e+r)%3==0;case i.PATTERN100:return(Math.floor(e/2)+Math.floor(r/3))%2==0;case i.PATTERN101:return e*r%2+e*r%3==0;case i.PATTERN110:return(e*r%2+e*r%3)%2==0;case i.PATTERN111:return(e*r%3+(e+r)%2)%2==0;default:throw new Error("bad maskPattern:"+t)}},getErrorCorrectPolynomial:function(t){var e=new f([1],0);for(var r=0;r<t;r++)e=e.multiply(new f([1,h.gexp(r)],0));return e},getLengthInBits:function(t,e){if(1<=e&&e<10)switch(t){case r.MODE_NUMBER:return 10;case r.MODE_ALPHA_NUM:return 9;case r.MODE_8BIT_BYTE:return 8;case r.MODE_KANJI:return 8;default:throw new Error("mode:"+t)}else if(e<27)switch(t){case r.MODE_NUMBER:return 12;case r.MODE_ALPHA_NUM:return 11;case r.MODE_8BIT_BYTE:return 16;case r.MODE_KANJI:return 10;default:throw new Error("mode:"+t)}else if(e<41)switch(t){case r.MODE_NUMBER:return 14;case r.MODE_ALPHA_NUM:return 13;case r.MODE_8BIT_BYTE:return 16;case r.MODE_KANJI:return 12;default:throw new Error("mode:"+t)}else throw new Error("type:"+e)},getLostPoint:function(t){var e=t.getModuleCount();var r=0;for(var i=0;i<e;i++)for(var n=0;n<e;n++){var s=0;var o=t.isDark(i,n);for(var u=-1;u<=1;u++){if(i+u<0||e<=i+u)continue;for(var a=-1;a<=1;a++){if(n+a<0||e<=n+a)continue;if(u==0&&a==0)continue;if(o==t.isDark(i+u,n+a))s++}}if(s>5)r+=3+s-5}for(var i=0;i<e-1;i++)for(var n=0;n<e-1;n++){var f=0;if(t.isDark(i,n))f++;if(t.isDark(i+1,n))f++;if(t.isDark(i,n+1))f++;if(t.isDark(i+1,n+1))f++;if(f==0||f==4)r+=3}for(var i=0;i<e;i++)for(var n=0;n<e-6;n++)if(t.isDark(i,n)&&!t.isDark(i,n+1)&&t.isDark(i,n+2)&&t.isDark(i,n+3)&&t.isDark(i,n+4)&&!t.isDark(i,n+5)&&t.isDark(i,n+6))r+=40;for(var n=0;n<e;n++)for(var i=0;i<e-6;i++)if(t.isDark(i,n)&&!t.isDark(i+1,n)&&t.isDark(i+2,n)&&t.isDark(i+3,n)&&t.isDark(i+4,n)&&!t.isDark(i+5,n)&&t.isDark(i+6,n))r+=40;var l=0;for(var n=0;n<e;n++)for(var i=0;i<e;i++)if(t.isDark(i,n))l++;var c=Math.abs(100*l/e/e-50)/5;r+=c*10;return r}};var o=function(t){this.mode=r.MODE_8BIT_BYTE;this.data=t;this.parsedData=[];for(var e=0;e<this.data.length;e++){var i=[];var n=this.data.charCodeAt(e);if(n>65536){i[0]=240|(n&1835008)>>>18;i[1]=128|(n&258048)>>>12;i[2]=128|(n&4032)>>>6;i[3]=128|n&63}else if(n>2048){i[0]=224|(n&61440)>>>12;i[1]=128|(n&4032)>>>6;i[2]=128|n&63}else if(n>128){i[0]=192|(n&1984)>>>6;i[1]=128|n&63}else i[0]=n;this.parsedData.push.apply(this.parsedData,i)}this.parsedData=Array.prototype.concat.apply([],this.parsedData);if(this.parsedData.length!=this.data.length){this.parsedData.unshift(191);this.parsedData.unshift(187);this.parsedData.unshift(239)}};o.prototype={getLength:function(){return this.parsedData.length},write:function(t){for(var e=0;e<this.parsedData.length;e++)t.put(this.parsedData[e],8)}};var a={RS_BLOCK_TABLE:[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],getRSBlocks:function(t,e){var r=a.getRsBlockTable(t,e);if(r==undefined)throw new Error("bad rs block @ typeNumber:"+t+"/errorCorrectLevel:"+e);var i=r.length/3;var n=[];for(var s=0;s<i;s++){var o=r[s*3+0];var u=r[s*3+1];var f=r[s*3+2];for(var l=0;l<o;l++)n.push({totalCount:u,dataCount:f})}return n},getRsBlockTable:function(t,r){switch(r){case e.L:return a.RS_BLOCK_TABLE[(t-1)*4+0];case e.M:return a.RS_BLOCK_TABLE[(t-1)*4+1];case e.Q:return a.RS_BLOCK_TABLE[(t-1)*4+2];case e.H:return a.RS_BLOCK_TABLE[(t-1)*4+3];default:return undefined}}};var f=function(t,e){if(t.length==undefined)throw new Error(t.length+"/"+e);var r=0;while(r<t.length&&t[r]==0)r++;this.num=new Array(t.length-r+e);for(var i=0;i<t.length-r;i++)this.num[i]=t[i+r]};f.prototype={get:function(t){return this.num[t]},getLength:function(){return this.num.length},multiply:function(t){var e=new Array(this.getLength()+t.getLength()-1);for(var r=0;r<this.getLength();r++)for(var i=0;i<t.getLength();i++)e[r+i]^=h.gexp(h.glog(this.get(r))+h.glog(t.get(i)));return new f(e,0)},mod:function(t){if(this.getLength()-t.getLength()<0)return this;var e=h.glog(this.get(0))-h.glog(t.get(0));var r=new Array(this.getLength());for(var i=0;i<this.getLength();i++)r[i]=this.get(i);for(var i=0;i<t.getLength();i++)r[i]^=h.gexp(h.glog(t.get(i))+e);return new f(r,0).mod(t)}};var h={EXP_TABLE:new Array(256),LOG_TABLE:new Array(256),glog:function(t){if(t<1)throw new Error("glog("+t+")");return h.LOG_TABLE[t]},gexp:function(t){while(t<0)t+=255;while(t>=256)t-=255;return h.EXP_TABLE[t]}};for(var l=0;l<8;l++)h.EXP_TABLE[l]=1<<l;for(var l=8;l<256;l++)h.EXP_TABLE[l]=h.EXP_TABLE[l-4]^h.EXP_TABLE[l-5]^h.EXP_TABLE[l-6]^h.EXP_TABLE[l-8];for(var l=0;l<255;l++)h.LOG_TABLE[h.EXP_TABLE[l]]=l;var u=function(){this.buffer=[];this.length=0};u.prototype={get:function(t){var e=Math.floor(t/8);return(this.buffer[e]>>>7-t%8&1)==1},put:function(t,e){for(var r=0;r<e;r++)this.putBit((t>>>e-r-1&1)==1)},getLengthInBits:function(){return this.length},putBit:function(t){var e=Math.floor(this.length/8);if(this.buffer.length<=e)this.buffer.push(0);if(t)this.buffer[e]|=128>>>this.length%8;this.length++}};function c(r,i){var s=4;for(var o=1;o<=40;o++){if(n.getMaxLength(o,e.L,4)>=r.length)break;s=o+1}var a=new t(s,e.L);a.addData(r);a.make();var f=a.getModuleCount();var l=i||{};var c=l.size||280;var h=l.margin||4;var d=Math.floor(c/(f+h*2));var p=Math.floor((c-d*f)/2);var g=document.createElement("canvas");g.width=c;g.height=c;var m=g.getContext("2d");m.fillStyle=l.lightColor||"#FFFFFF";m.fillRect(0,0,c,c);m.fillStyle=l.darkColor||"#1B2A4A";for(var v=0;v<f;v++)for(var y=0;y<f;y++)if(a.isDark(v,y))m.fillRect(p+y*d,p+v*d,d,d);return g}return{generate:c}})();
+
+    </script>
+    <style>
+        :root {
+            --navy: #1B2A4A;
+            --accent: #3B7DD8;
+            --accent-hover: #2E6BC0;
+            --dark: #2E4057;
+            --light-bg: #F0F4F8;
+            --card-bg: #FFFFFF;
+            --border: #D1D9E6;
+            --text: #333333;
+            --text-light: #666666;
+            --error: #D32F2F;
+            --success: #27AE60;
+            --warning: #F39C12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--light-bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--dark) 100%);
+            color: white;
+            padding: 20px 16px 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header h1 {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .header p {
+            font-size: 12px;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        /* AUTH GATE */
+        .auth-gate {
+            max-width: 420px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+        .auth-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .auth-card .lock-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+        }
+        .auth-card h2 {
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .auth-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .auth-error {
+            background: #FDECEA;
+            color: var(--error);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        /* FORM CONTAINER */
+        .form-container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px;
+            display: none;
+        }
+
+        /* SECTIONS */
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        /* FORM FIELDS */
+        .field {
+            margin-bottom: 14px;
+        }
+        .field:last-child {
+            margin-bottom: 0;
+        }
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .field label .required {
+            color: var(--error);
+            margin-left: 2px;
+        }
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--card-bg);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .field input:focus,
+        .field select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 125, 216, 0.15);
+        }
+        .field input.error,
+        .field select.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+        .field select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+        .field-hint {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* EXHIBIT LIST */
+        .exhibit-entry {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .exhibit-entry .field {
+            margin-bottom: 10px;
+        }
+        .exhibit-list {
+            margin-top: 12px;
+        }
+        .exhibit-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .exhibit-item .exhibit-info {
+            flex: 1;
+        }
+        .exhibit-item .exhibit-num {
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .exhibit-item .exhibit-detail {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+        .exhibit-item .remove-btn {
+            background: none;
+            border: none;
+            color: var(--error);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .exhibit-item .remove-btn:hover {
+            background: rgba(211, 47, 47, 0.1);
+        }
+
+        /* BUTTONS */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--accent);
+            border: 1.5px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+        .btn-add {
+            background: var(--success);
+            color: white;
+            margin-top: 8px;
+        }
+        .btn-add:hover {
+            background: #219A52;
+        }
+        .btn-submit {
+            background: var(--navy);
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        .btn-submit:hover {
+            background: var(--dark);
+        }
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* QR CODE RESULT */
+        .qr-result {
+            display: none;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .qr-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .qr-card h2 {
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .qr-card .qr-subtitle {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        .qr-card canvas {
+            margin: 0 auto;
+            display: block;
+            border-radius: 8px;
+        }
+        .qr-card .qr-instructions {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+            text-align: left;
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .qr-card .qr-instructions strong {
+            color: var(--navy);
+        }
+        .qr-summary {
+            margin-top: 16px;
+            text-align: left;
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .qr-summary h3 {
+            font-size: 13px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .qr-summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .qr-summary-row:last-child {
+            border-bottom: none;
+        }
+        .qr-summary-row .label {
+            color: var(--text-light);
+        }
+        .qr-summary-row .value {
+            color: var(--navy);
+            font-weight: 600;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #E8F5E9;
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 20px 16px 32px;
+            font-size: 11px;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Waitemata DFR</h1>
+        <p>Device Examination Request</p>
+    </div>
+
+    <!-- PASSWORD GATE -->
+    <div class="auth-gate" id="passwordGate">
+        <div class="auth-card fade-in">
+            <div class="lock-icon">🔐</div>
+            <h2>Restricted Access</h2>
+            <p>This system is restricted to authorised personnel only. Enter the access code to continue.</p>
+            <div class="auth-error" id="passwordError">
+                Incorrect access code. Please try again.
+            </div>
+            <div class="field">
+                <label for="accessCode">Access Code <span class="required">*</span></label>
+                <input type="password" id="accessCode" placeholder="Enter access code">
+            </div>
+            <br>
+            <button class="btn btn-primary" onclick="verifyPassword()">Continue</button>
+        </div>
+    </div>
+
+    <!-- EMAIL GATE -->
+    <div class="auth-gate" id="authGate" style="display:none;">
+        <div class="auth-card fade-in">
+            <div class="lock-icon">🔒</div>
+            <h2>Authorised Access Only</h2>
+            <p>Enter your police email address to submit an examination request.</p>
+            <div class="auth-error" id="authError">
+                Access restricted to authorised police email addresses only.
+            </div>
+            <div class="field">
+                <label for="authEmail">Police Email <span class="required">*</span></label>
+                <input type="email" id="authEmail" placeholder="name@police.govt.nz" autocapitalize="none" autocomplete="email">
+            </div>
+            <br>
+            <button class="btn btn-primary" onclick="verifyEmail()">Continue</button>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-container" id="formContainer">
+
+        <!-- Case Details -->
+        <div class="section fade-in">
+            <div class="section-title">Case Details</div>
+            <div class="field">
+                <label>Date & Time of Request <span class="required">*</span></label>
+                <input type="datetime-local" id="fldDateTime">
+            </div>
+            <div class="field">
+                <label>Police File Number <span class="required">*</span></label>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="text" id="fldPoliceFile1" placeholder="260413" maxlength="6" inputmode="numeric" style="width: 55%; text-align: center; letter-spacing: 2px;">
+                    <span style="font-size: 24px; font-weight: bold; color: var(--navy);">-</span>
+                    <input type="text" id="fldPoliceFile2" placeholder="2343" maxlength="4" inputmode="numeric" style="width: 40%; text-align: center; letter-spacing: 2px;">
+                </div>
+                <p class="field-hint">6 digits — 4 digits</p>
+            </div>
+        </div>
+
+        <!-- Requestor Details -->
+        <div class="section fade-in">
+            <div class="section-title">Requestor Details</div>
+            <div class="field">
+                <label>QID <span class="required">*</span></label>
+                <input type="text" id="fldQID" placeholder="e.g. QID12345">
+            </div>
+            <div class="field">
+                <label>Rank <span class="required">*</span></label>
+                <select id="fldRank">
+                    <option value="" disabled selected>Select rank</option>
+                    <option value="Constable on Trial">Constable on Trial</option>
+                    <option value="Constable">Constable</option>
+                    <option value="Senior Constable">Senior Constable</option>
+                    <option value="Detective Constable">Detective Constable</option>
+                    <option value="Detective">Detective</option>
+                    <option value="Sergeant">Sergeant</option>
+                    <option value="Detective Sergeant">Detective Sergeant</option>
+                    <option value="Senior Sergeant">Senior Sergeant</option>
+                    <option value="Inspector">Inspector</option>
+                    <option value="Detective Inspector">Detective Inspector</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>First Name <span class="required">*</span></label>
+                <input type="text" id="fldFirstName" placeholder="First name">
+            </div>
+            <div class="field">
+                <label>Last Name <span class="required">*</span></label>
+                <input type="text" id="fldLastName" placeholder="Last name">
+            </div>
+        </div>
+
+        <!-- Location & Warrant -->
+        <div class="section fade-in">
+            <div class="section-title">Location & Warrant</div>
+            <div class="field">
+                <label>Exhibit Location <span class="required">*</span></label>
+                <select id="fldLocation">
+                    <option value="" disabled selected>Select location</option>
+                    <option value="Henderson Police Station">Henderson Police Station</option>
+                    <option value="Henderson DFR Lab">Henderson DFR Lab</option>
+                    <option value="North Shore Police Station">North Shore Police Station</option>
+                    <option value="Orewa Police Station">Orewa Police Station</option>
+                    <option value="Auckland Central Property & Exhibit Store">Auckland Central Property & Exhibit Store</option>
+                    <option value="Counties Manukau Property & Exhibit Store">Counties Manukau Property & Exhibit Store</option>
+                    <option value="Papakura Police Station">Papakura Police Station</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Search Warrant Type <span class="required">*</span></label>
+                <select id="fldWarrantType">
+                    <option value="" disabled selected>Select warrant type</option>
+                    <option value="Place Search Warrant">Place Search Warrant</option>
+                    <option value="Vehicle Search Warrant">Vehicle Search Warrant</option>
+                    <option value="Thing Search Warrant">Thing Search Warrant</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Search Warrant Expiry</label>
+                <input type="date" id="fldWarrantExpiry">
+            </div>
+        </div>
+
+        <!-- Exhibits -->
+        <div class="section fade-in">
+            <div class="section-title">Exhibits</div>
+            <p style="font-size: 12px; color: var(--text-light); margin-bottom: 12px;">
+                Add each mobile device exhibit below.
+            </p>
+
+            <div class="exhibit-entry">
+                <div class="field">
+                    <label>Exhibit Number <span class="required">*</span></label>
+                    <input type="text" id="fldExhibitNum" placeholder="e.g. EXH001">
+                </div>
+                <div class="field">
+                    <label>Make / Model</label>
+                    <input type="text" id="fldMakeModel" placeholder="e.g. Samsung Galaxy S24">
+                </div>
+                <div class="field">
+                    <label>PIN / Pattern (if known)</label>
+                    <input type="text" id="fldPinPattern" placeholder="e.g. 1234">
+                </div>
+                <button class="btn btn-add" onclick="addExhibit()">+ Add Exhibit</button>
+            </div>
+
+            <div class="exhibit-list" id="exhibitList"></div>
+        </div>
+
+        <!-- Search Warrant Notice -->
+        <div class="section fade-in">
+            <div style="background: #FFF3E0; border-left: 4px solid #F39C12; border-radius: 8px; padding: 14px 16px;">
+                <div style="font-size: 13px; font-weight: 700; color: #E65100; margin-bottom: 6px;">⚠ SEARCH WARRANT REQUIREMENT</div>
+                <p style="font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 8px;">
+                    A signed copy of the search warrant is <strong>required before commencement</strong> of any examination. Please email a copy of the signed search warrant to:
+                </p>
+                <p style="font-size: 14px; font-weight: 700; color: #1B2A4A; text-align: center; padding: 8px; background: white; border-radius: 6px;">
+                    waitemataDFR@police.govt.nz
+                </p>
+                <p style="font-size: 12px; color: #666; margin-top: 8px; line-height: 1.5;">
+                    No examination will proceed without a valid signed warrant on file.
+                </p>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="section fade-in">
+            <button class="btn btn-submit" id="btnSubmit" onclick="submitForm()">
+                Submit Request
+            </button>
+            <p class="field-hint" style="text-align: center; margin-top: 8px;">
+                A QR code and email will be generated for your records and the DFR lab.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- QR RESULT -->
+    <div class="qr-result" id="qrResult">
+        <div class="qr-card fade-in">
+            <div class="success-badge">✓ Request Submitted</div>
+            <h2>Your QR Code</h2>
+            <p class="qr-subtitle">Save this QR code and email it to the DFR lab</p>
+            <img id="qrImage" style="width: 280px; height: 280px; border-radius: 8px; margin: 0 auto; display: block;" alt="QR Code">
+
+            <div class="qr-summary" id="qrSummary"></div>
+
+            <div style="margin-top: 16px;">
+                <button class="btn btn-primary" onclick="downloadQR()" style="margin-bottom: 10px;">
+                    📥 Save QR Code to Device
+                </button>
+                <button class="btn btn-submit" onclick="openEmail()" style="background: var(--success);">
+                    ✉ Open Email with Request Details
+                </button>
+            </div>
+
+            <div class="qr-instructions" style="margin-top: 16px;">
+                <strong>Steps to complete your submission:</strong><br>
+                1. Tap <strong>Save QR Code</strong> to download the image<br>
+                2. Tap <strong>Open Email</strong> — a pre-filled email will open<br>
+                3. <strong>Attach the saved QR code image</strong> to the email<br>
+                4. Hit <strong>Send</strong><br>
+                5. The DFR lab will scan the QR code to import your request
+            </div>
+
+            <div style="background: #FFF3E0; border-left: 4px solid #F39C12; border-radius: 8px; padding: 14px 16px; margin-top: 16px;">
+                <div style="font-size: 13px; font-weight: 700; color: #E65100; margin-bottom: 6px;">⚠ REMINDER</div>
+                <p style="font-size: 13px; color: #333; line-height: 1.6;">
+                    A signed copy of the search warrant <strong>must also be emailed</strong> to
+                    <strong>waitemataDFR@police.govt.nz</strong> before any examination will commence.
+                </p>
+            </div>
+
+            <br>
+            <button class="btn btn-secondary" onclick="newRequest()">Submit Another Request</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        Waitemata DFR Case Management System<br>
+        Authorised use only
+    </div>
+
+    <script>
+        // Allowed email domains
+        const ALLOWED_DOMAINS = ['police.govt.nz'];
+        // Password hash (SHA-256)
+        const ACCESS_HASH = 'a2574f77367ae339e545d734f5209d781d85b5904e63754a463887e7be36c3a9';
+
+        let exhibits = [];
+        let authenticatedEmail = '';
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function verifyPassword() {
+            const code = document.getElementById('accessCode').value;
+            const errorEl = document.getElementById('passwordError');
+
+            if (!code) {
+                errorEl.textContent = 'Please enter the access code.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            const hashed = await hashPassword(code);
+            if (hashed !== ACCESS_HASH) {
+                errorEl.textContent = 'Incorrect access code. Please try again.';
+                errorEl.style.display = 'block';
+                document.getElementById('accessCode').classList.add('error');
+                document.getElementById('accessCode').value = '';
+                return;
+            }
+
+            document.getElementById('passwordGate').style.display = 'none';
+            document.getElementById('authGate').style.display = 'block';
+        }
+
+        // Allow Enter key on password field
+        document.getElementById('accessCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyPassword();
+        });
+
+        // Set default date/time to now
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('fldDateTime').value = now.toISOString().slice(0, 16);
+
+            // Auto-tab from first police file box to second after 6 digits
+            document.getElementById('fldPoliceFile1').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length === 6) {
+                    document.getElementById('fldPoliceFile2').focus();
+                }
+            });
+
+            // Enforce digits only on second police file box
+            document.getElementById('fldPoliceFile2').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '');
+            });
+        });
+
+        function verifyEmail() {
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
+            const errorEl = document.getElementById('authError');
+
+            if (!email) {
+                errorEl.textContent = 'Please enter your email address.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            const domain = email.split('@')[1];
+            if (!domain || !ALLOWED_DOMAINS.includes(domain)) {
+                errorEl.textContent = 'Access restricted to authorised police email addresses only.';
+                errorEl.style.display = 'block';
+                document.getElementById('authEmail').classList.add('error');
+                return;
+            }
+
+            authenticatedEmail = email;
+            document.getElementById('authGate').style.display = 'none';
+            document.getElementById('formContainer').style.display = 'block';
+        }
+
+        // Allow Enter key on email field
+        document.getElementById('authEmail').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyEmail();
+        });
+
+        function addExhibit() {
+            const num = document.getElementById('fldExhibitNum').value.trim();
+            const make = document.getElementById('fldMakeModel').value.trim();
+            const pin = document.getElementById('fldPinPattern').value.trim();
+
+            if (!num) {
+                document.getElementById('fldExhibitNum').classList.add('error');
+                document.getElementById('fldExhibitNum').focus();
+                return;
+            }
+
+            // Check for duplicate
+            if (exhibits.some(e => e.num.toUpperCase() === num.toUpperCase())) {
+                alert('Exhibit number already added: ' + num);
+                return;
+            }
+
+            document.getElementById('fldExhibitNum').classList.remove('error');
+
+            exhibits.push({ num, make, pin });
+            renderExhibits();
+
+            // Clear fields
+            document.getElementById('fldExhibitNum').value = '';
+            document.getElementById('fldMakeModel').value = '';
+            document.getElementById('fldPinPattern').value = '';
+            document.getElementById('fldExhibitNum').focus();
+        }
+
+        function removeExhibit(index) {
+            exhibits.splice(index, 1);
+            renderExhibits();
+        }
+
+        function renderExhibits() {
+            const list = document.getElementById('exhibitList');
+            if (exhibits.length === 0) {
+                list.innerHTML = '';
+                return;
+            }
+
+            list.innerHTML = exhibits.map((e, i) => `
+                <div class="exhibit-item fade-in">
+                    <div class="exhibit-info">
+                        <div class="exhibit-num">${e.num}</div>
+                        <div class="exhibit-detail">
+                            ${e.make ? e.make : 'Unknown device'}
+                            ${e.pin ? ' • PIN: ' + e.pin : ''}
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removeExhibit(${i})">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function validateForm() {
+            let valid = true;
+            const required = [
+                { id: 'fldDateTime', name: 'Date & Time' },
+                { id: 'fldQID', name: 'QID' },
+                { id: 'fldRank', name: 'Rank' },
+                { id: 'fldFirstName', name: 'First Name' },
+                { id: 'fldLastName', name: 'Last Name' },
+                { id: 'fldLocation', name: 'Exhibit Location' },
+                { id: 'fldWarrantType', name: 'Warrant Type' },
+            ];
+
+            let errors = [];
+
+            required.forEach(f => {
+                const el = document.getElementById(f.id);
+                if (!el.value.trim()) {
+                    el.classList.add('error');
+                    errors.push(f.name);
+                    valid = false;
+                } else {
+                    el.classList.remove('error');
+                }
+            });
+
+            // Validate Police File Number (6 digits - 4 digits)
+            const pf1 = document.getElementById('fldPoliceFile1').value.trim();
+            const pf2 = document.getElementById('fldPoliceFile2').value.trim();
+
+            if (!pf1 || !pf2) {
+                document.getElementById('fldPoliceFile1').classList.add('error');
+                document.getElementById('fldPoliceFile2').classList.add('error');
+                errors.push('Police File Number (both parts required)');
+                valid = false;
+            } else if (!/^\d{6}$/.test(pf1)) {
+                document.getElementById('fldPoliceFile1').classList.add('error');
+                errors.push('Police File Number first part must be exactly 6 digits');
+                valid = false;
+            } else if (!/^\d{4}$/.test(pf2)) {
+                document.getElementById('fldPoliceFile2').classList.add('error');
+                errors.push('Police File Number second part must be exactly 4 digits');
+                valid = false;
+            } else {
+                document.getElementById('fldPoliceFile1').classList.remove('error');
+                document.getElementById('fldPoliceFile2').classList.remove('error');
+            }
+
+            if (exhibits.length === 0) {
+                errors.push('At least one exhibit');
+                valid = false;
+            }
+
+            if (!valid) {
+                alert('Please complete the following:\n\n• ' + errors.join('\n• '));
+            }
+
+            return valid;
+        }
+
+        function submitForm() {
+            try {
+                if (!validateForm()) return;
+
+            // Build data string with pipe delimiter
+            // Format: DFR|DateTime|PoliceFile|QID|Rank|FirstName|LastName|Location|WarrantType|WarrantExpiry|ExhibitData
+            // ExhibitData = semicolon-separated exhibits, each comma-separated (num,make,pin)
+
+            const dateTime = document.getElementById('fldDateTime').value;
+            const policeFile = document.getElementById('fldPoliceFile1').value.trim() + '-' + document.getElementById('fldPoliceFile2').value.trim();
+            const qid = document.getElementById('fldQID').value.trim();
+            const rank = document.getElementById('fldRank').value;
+            const firstName = document.getElementById('fldFirstName').value.trim();
+            const lastName = document.getElementById('fldLastName').value.trim();
+            const location = document.getElementById('fldLocation').value;
+            const warrantType = document.getElementById('fldWarrantType').value;
+            const warrantExpiry = document.getElementById('fldWarrantExpiry').value;
+
+            // Encode exhibits
+            const exhibitData = exhibits.map(e =>
+                [e.num, e.make || '', e.pin || ''].join(',')
+            ).join(';');
+
+            const dataString = [
+                'DFR',
+                dateTime,
+                policeFile,
+                qid,
+                rank,
+                firstName,
+                lastName,
+                location,
+                warrantType,
+                warrantExpiry,
+                exhibitData
+            ].join('|');
+
+            // Generate QR Code locally (no external dependencies)
+            const qrCanvas = QRCodeGen.generate(dataString, {
+                size: 280,
+                margin: 4,
+                darkColor: '#1B2A4A',
+                lightColor: '#FFFFFF'
+            });
+            const qrImage = document.getElementById('qrImage');
+            qrImage.src = qrCanvas.toDataURL('image/png');
+            
+            // Process result
+            (function() {
+                // Build summary
+                const summary = document.getElementById('qrSummary');
+                let exhibitSummary = exhibits.map(e =>
+                    `${e.num}${e.make ? ' — ' + e.make : ''}`
+                ).join(', ');
+
+                summary.innerHTML = `
+                    <h3>Request Summary</h3>
+                    <div class="qr-summary-row">
+                        <span class="label">Date/Time</span>
+                        <span class="value">${new Date(dateTime).toLocaleString('en-NZ')}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">Police File</span>
+                        <span class="value">${policeFile}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">Requestor</span>
+                        <span class="value">${rank ? rank + ' ' : ''}${firstName} ${lastName}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">QID</span>
+                        <span class="value">${qid}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">Location</span>
+                        <span class="value">${location}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">Warrant</span>
+                        <span class="value">${warrantType}</span>
+                    </div>
+                    <div class="qr-summary-row">
+                        <span class="label">Exhibits</span>
+                        <span class="value">${exhibitSummary}</span>
+                    </div>
+                `;
+
+                // Show QR result, hide form
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('qrResult').style.display = 'block';
+                window.scrollTo(0, 0);
+
+                // Store form data globally for email function
+                window._lastSubmission = {
+                    dateTime, policeFile, qid, rank, firstName, lastName,
+                    location, warrantType, warrantExpiry, exhibitSummary
+                };
+
+            })();
+
+            } catch(err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        function downloadQR() {
+            const img = document.getElementById('qrImage');
+            const policeFile = window._lastSubmission ? window._lastSubmission.policeFile : 'request';
+            const link = document.createElement('a');
+            link.download = 'DFR_QR_' + policeFile + '.png';
+            link.href = img.src;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function openEmail() {
+            const d = window._lastSubmission;
+            if (!d) return;
+
+            const dfrEmail = 'waitemataDFR@police.govt.nz';
+            const userEmail = authenticatedEmail;
+            const recipients = dfrEmail + ',' + userEmail;
+
+            const subject = encodeURIComponent('DFR Examination Request — ' + d.policeFile);
+
+            const body = encodeURIComponent(
+                'WAITEMATA DFR — EXAMINATION REQUEST\n' +
+                '══════════════════════════════════\n\n' +
+                'Police File Number: ' + d.policeFile + '\n' +
+                'Date/Time of Request: ' + new Date(d.dateTime).toLocaleString('en-NZ') + '\n\n' +
+                'REQUESTOR DETAILS\n' +
+                'QID: ' + d.qid + '\n' +
+                'Name: ' + (d.rank ? d.rank + ' ' : '') + d.firstName + ' ' + d.lastName + '\n\n' +
+                'EXHIBIT DETAILS\n' +
+                'Location: ' + d.location + '\n' +
+                'Warrant Type: ' + d.warrantType + '\n' +
+                (d.warrantExpiry ? 'Warrant Expiry: ' + d.warrantExpiry + '\n' : '') +
+                'Exhibits: ' + d.exhibitSummary + '\n\n' +
+                '══════════════════════════════════\n\n' +
+                'IMPORTANT: Please attach the QR code image (saved to your device) to this email before sending.\n\n' +
+                'REMINDER: A signed copy of the search warrant must also be emailed to ' + dfrEmail + ' before any examination will commence.\n\n' +
+                '══════════════════════════════════\n' +
+                'This request was generated via the Waitemata DFR Request System.'
+            );
+
+            window.location.href = 'mailto:' + recipients + '?subject=' + subject + '&body=' + body;
+        }
+
+        function newRequest() {
+            // Reset form
+            document.getElementById('fldPoliceFile1').value = '';
+            document.getElementById('fldPoliceFile2').value = '';
+            document.getElementById('fldQID').value = '';
+            document.getElementById('fldRank').value = '';
+            document.getElementById('fldFirstName').value = '';
+            document.getElementById('fldLastName').value = '';
+            document.getElementById('fldLocation').value = '';
+            document.getElementById('fldWarrantType').value = '';
+            document.getElementById('fldWarrantExpiry').value = '';
+            document.getElementById('fldExhibitNum').value = '';
+            document.getElementById('fldMakeModel').value = '';
+            document.getElementById('fldPinPattern').value = '';
+            exhibits = [];
+            renderExhibits();
+
+            // Reset date/time
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('fldDateTime').value = now.toISOString().slice(0, 16);
+
+            // Show form, hide QR
+            document.getElementById('qrResult').style.display = 'none';
+            document.getElementById('formContainer').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
